@@ -22,6 +22,7 @@
             v-for="result in searchResults"
             :key="result.id"
             class="py-2 cursor-pointer"
+            @click="selectCity(result)"
           >
             {{ result.formatted }}
           </li>
@@ -37,6 +38,7 @@ import type { CitiesSearchResponse, SearchResult } from '@/types/cities';
 import { debounce } from '@/utils/debounce';
 import axios from 'axios';
 import { ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 const searchQuery = ref('');
 
@@ -69,10 +71,32 @@ const getSearchResults = debounce(async () => {
       id: item.properties.place_id,
       name: item.properties.name,
       formatted: item.properties.formatted,
+      state: item.properties.state,
+      location: {
+        lon: item.geometry.coordinates[0],
+        lat: item.geometry.coordinates[1],
+      },
     }));
   } catch (e) {
     searchError.value = true;
     searchResults.value = [];
   }
 }, 500);
+
+const router = useRouter();
+
+const selectCity = (result: SearchResult) => {
+  router.push({
+    name: 'city-view',
+    params: {
+      state: result.state,
+      city: result.name,
+    },
+    query: {
+      lat: result.location.lat,
+      lon: result.location.lon,
+      preview: 'true',
+    },
+  });
+};
 </script>

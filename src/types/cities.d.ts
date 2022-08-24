@@ -65,4 +65,9 @@ export interface SearchResult {
   id: string;
   name: string;
   formatted: string;
+  state: string;
+  location: {
+    lat: number;
+    lon: number;
+  };
 }
