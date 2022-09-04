@@ -15,8 +15,4 @@ module.exports = {
     ecmaVersion: 'latest',
   },
   plugins: ['prettier'],
-  globals: {
-    GEOAPIFY_API_KEY: true,
-    OPENWEATHER_API_KEY: true,
-  },
 };

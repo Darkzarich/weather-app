@@ -21,7 +21,7 @@ const getWeatherData = async () => {
       lat,
       lon,
       units: 'metric',
-      appid: OPENWEATHER_API_KEY,
+      appid: import.meta.env.VITE_OPENWEATHER_API_KEY,
     };
 
     const requests = [

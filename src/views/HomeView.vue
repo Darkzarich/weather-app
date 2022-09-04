@@ -55,6 +55,8 @@ const getSearchResults = debounce(async () => {
     return;
   }
 
+  console.log(import.meta.env);
+
   try {
     const res = await axios.get<CitiesSearchResponse>(
       `https://api.geoapify.com/v1/geocode/autocomplete`,
@@ -62,7 +64,7 @@ const getSearchResults = debounce(async () => {
         params: {
           text: searchQuery.value,
           type: 'city',
-          apiKey: GEOAPIFY_API_KEY,
+          apiKey: import.meta.env.VITE_GEOAPIFY_API_KEY,
         },
       }
     );
