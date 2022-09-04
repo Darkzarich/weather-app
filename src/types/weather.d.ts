@@ -18,11 +18,11 @@ export interface WeatherForecastResponse {
   cod: string;
   message: number;
   cnt: number;
-  list: List[];
+  list: HourlyWeather[];
   city: City;
 }
 
-export interface List {
+export interface HourlyWeather {
   dt: number;
   main: Main;
   weather: Weather[];
