@@ -67,7 +67,7 @@ import type { FavoriteCity } from '@/types/cities';
 import { nanoid } from 'nanoid';
 import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import BaseModal from './BaseModal.vue';
+import BaseModal from './Base/BaseModal.vue';
 
 const showInfo = ref(false);
 
