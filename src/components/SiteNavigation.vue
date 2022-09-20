@@ -81,6 +81,7 @@ const route = useRoute();
 const router = useRouter();
 
 const addCity = () => {
+  // TODO: check if city was already added before
   const data = localStorage.getItem(citiesLSKey);
 
   if (data) {
