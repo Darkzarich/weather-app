@@ -177,6 +177,11 @@ const getWeatherData = async () => {
 
     currentWeather.value = weatherData[0].data;
     forecastWeather.value = weatherData[1].data;
+
+    // Fake delay to create better UX, avoid flickering
+    // TODO: Subject to be changed to minimal wait
+    // (if request is faster than 1s then still wait, else wait until request is done)
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   } catch (e) {
     console.log(e);
   }
