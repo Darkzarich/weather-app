@@ -122,17 +122,28 @@
         </div>
       </div>
     </div>
+
+    <div
+      v-if="!route.query.preview"
+      class="flex items-center gap-2 py-12 text-white cursor-pointer duration-150 hover:text-red-500"
+      @click="removeCity"
+    >
+      <i class="fa-solid fa-trash"></i>
+      <p>Remove City</p>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import axios from 'axios';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import type {
   CurrentWeatherResponse,
   WeatherForecastResponse,
 } from '@/types/weather';
 import { ref } from 'vue';
+import { citiesLSKey } from '@/config';
+import type { FavoriteCity } from '@/types/cities';
 
 const route = useRoute();
 
@@ -176,4 +187,18 @@ const currentWeather = ref<CurrentWeatherResponse>();
 const forecastWeather = ref<WeatherForecastResponse>();
 
 await getWeatherData();
+
+const router = useRouter();
+
+const removeCity = () => {
+  const data = JSON.parse(localStorage.getItem(citiesLSKey) ?? '[]');
+  const newCities = data.filter(
+    (city: FavoriteCity) => city.id !== route.query.id
+  );
+  localStorage.setItem(citiesLSKey, JSON.stringify(newCities));
+
+  router.push({
+    name: 'home',
+  });
+};
 </script>

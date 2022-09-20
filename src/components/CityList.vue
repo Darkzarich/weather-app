@@ -43,6 +43,7 @@ const goToCityView = (city: FavoriteCity) => {
     query: {
       lat: city.location.lat,
       lon: city.location.lon,
+      id: city.id,
     },
   });
 };
