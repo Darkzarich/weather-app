@@ -22,11 +22,24 @@ import CityCard from './CityCard.vue';
 const favoriteCities = ref<FavoriteCity[]>([]);
 
 const getCities = () => {
+  // Simulated fetch of city's info for skeleton to appear
   const data = JSON.parse(localStorage.getItem(citiesLSKey) ?? '[]');
 
-  if (data) {
-    favoriteCities.value = data;
+  if (data.length) {
+    return new Promise<void>((resolve) => {
+      setTimeout(() => {
+        const data = JSON.parse(localStorage.getItem(citiesLSKey) ?? '[]');
+
+        if (data) {
+          favoriteCities.value = data;
+        }
+
+        resolve();
+      }, 1000);
+    });
   }
+
+  return;
 };
 
 await getCities();
