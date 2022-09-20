@@ -1,5 +1,5 @@
 <template>
-  <header class="sticky top-0 bg-weather-primary shadow-lg">
+  <header class="sticky top-0 bg-weather-primary shadow-lg z-10">
     <nav
       class="container flex flex-col sm:flex-row items-center gap-4 text-white py-6"
     >
@@ -16,7 +16,9 @@
           @click="toggleModal"
         ></i>
         <i
+          v-if="route.query.preview"
           class="fa-solid fa-plus text-xl hover:text-weather-secondary duration-150 cursor-pointer"
+          @click="addCity"
         ></i>
         <a
           href="https://github.com/Darkzarich/weather-app"
@@ -60,12 +62,47 @@
 </template>
 
 <script lang="ts" setup>
+import type { FavoriteCity } from '@/types/cities';
+import { nanoid } from 'nanoid';
 import { ref } from 'vue';
+import { useRoute, useRouter } from 'vue-router';
 import BaseModal from './BaseModal.vue';
 
 const showInfo = ref(false);
 
 const toggleModal = () => {
   showInfo.value = !showInfo.value;
+};
+
+const favoriteCities = ref<FavoriteCity[]>([]);
+
+const route = useRoute();
+const router = useRouter();
+
+const addCity = () => {
+  const lsKey = 'favoriteCities';
+  const data = localStorage.getItem(lsKey);
+
+  if (data) {
+    favoriteCities.value = JSON.parse(data);
+  }
+
+  const locationObj = {
+    id: nanoid(),
+    state: route.params.state,
+    city: route.params.city,
+    location: {
+      lat: route.query.lat,
+      lon: route.query.lon,
+    },
+  };
+
+  favoriteCities.value.push(locationObj as FavoriteCity);
+
+  localStorage.setItem(lsKey, JSON.stringify(favoriteCities.value));
+
+  const query = Object.assign({}, route.query);
+  delete query.preview;
+  router.replace({ query });
 };
 </script>

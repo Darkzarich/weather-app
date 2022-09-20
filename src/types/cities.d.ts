@@ -66,8 +66,17 @@ export interface SearchResult {
   name: string;
   formatted: string;
   state: string;
-  location: {
-    lat: number;
-    lon: number;
-  };
+  location: Location;
+}
+
+interface Location {
+  lat: string | number;
+  lon: string | number;
+}
+
+export interface FavoriteCity {
+  id: string;
+  state: string;
+  city: string;
+  location: Location;
 }
