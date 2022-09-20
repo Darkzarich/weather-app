@@ -62,6 +62,7 @@
 </template>
 
 <script lang="ts" setup>
+import { citiesLSKey } from '@/config';
 import type { FavoriteCity } from '@/types/cities';
 import { nanoid } from 'nanoid';
 import { ref } from 'vue';
@@ -80,8 +81,7 @@ const route = useRoute();
 const router = useRouter();
 
 const addCity = () => {
-  const lsKey = 'favoriteCities';
-  const data = localStorage.getItem(lsKey);
+  const data = localStorage.getItem(citiesLSKey);
 
   if (data) {
     favoriteCities.value = JSON.parse(data);
@@ -99,7 +99,7 @@ const addCity = () => {
 
   favoriteCities.value.push(locationObj as FavoriteCity);
 
-  localStorage.setItem(lsKey, JSON.stringify(favoriteCities.value));
+  localStorage.setItem(citiesLSKey, JSON.stringify(favoriteCities.value));
 
   const query = Object.assign({}, route.query);
   delete query.preview;
